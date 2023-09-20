@@ -1,5 +1,5 @@
 {
-    "name": "offline/oc-gdpr-plugin",
+    "name": "offline/gdpr-plugin",
     "description": "October CMS plugin to make websites GDPR and ePrivacy compliant",
     "type": "october-plugin",
     "license": "MIT",
