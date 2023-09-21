@@ -1,7 +1,6 @@
 <?php namespace OFFLINE\GDPR\Components;
 
 use Cms\Classes\ComponentBase;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use OFFLINE\GDPR\Classes\Cookies\ConsentCookie;
 use OFFLINE\GDPR\Models\CookieGroup;
@@ -37,21 +36,27 @@ class CookieManager extends ComponentBase
                 'default'     => 1,
                 'type'        => 'checkbox',
             ],
-            'deferred' => [
-                'title'       => 'offline.gdpr::lang.cookie_banner.deferred.title',
-                'description' => 'offline.gdpr::lang.cookie_banner.deferred.description',
-                'default'     => 0,
-                'type'        => 'checkbox',
-            ]
         ];
     }
 
     public function init()
     {
         $this->consentCookie = new ConsentCookie();
+
+        if ( ! post('_gdpr_submit')) {
+            return;
+        }
+
+        $enabled = collect(post('cookies'))->filter(function ($item) {
+            return $item['enabled'] ?? false;
+        })->map(function ($item) {
+            return (int)($item['level'] ?? 0);
+        })->toArray();
+
+        $this->consentCookie->withExpiry(post('consent_expiry', 12))->set($enabled);
     }
 
-    public function setup()
+    public function onRun()
     {
         $this->includeJs = $this->property('include_js', true);
         if ($this->property('include_css')) {
@@ -63,45 +68,8 @@ class CookieManager extends ComponentBase
         $this->consent       = $this->consentCookie->get();
     }
 
-    public function onRun()
+    protected function getCookieGroups()
     {
-        // The CookieManager form has been submitted. Return a proper redirect
-        // here so the user receives the newly set cookie for further requests.
-        if (post('_gdpr_submit')) {
-            $enabled = collect(post('cookies'))->filter(function ($item) {
-                return $item['enabled'] ?? false;
-            })->map(function ($item) {
-                return (int)($item['level'] ?? 0);
-            })->toArray();
-
-            $cookie = $this->consentCookie->withExpiry(post('consent_expiry', 12))->set($enabled);
-
-            return Redirect::back()->withCookie($cookie);
-        }
-
-        // Defer the setup of the cookie manager until later. This comes in
-        // handy if you want to display the cookie manager in a popup via
-        // the onRenderCookieManager method.
-        if ((bool)$this->property('deferred')) {
-            return;
-        }
-
-        $this->setup();
-    }
-
-    public function onRenderCookieManager()
-    {
-        $this->setup();
-
-        return ['manager' => $this->renderPartial($this->alias . '::default')];
-    }
-
-    public function getCookieGroups()
-    {
-        if ($this->cookieGroups) {
-            return $this->cookieGroups;
-        }
-
-        return $this->cookieGroups = CookieGroup::with('cookies')->orderBy('sort_order', 'ASC')->get();
+        return CookieGroup::with('cookies')->orderBy('sort_order', 'ASC')->get();
     }
 }

@@ -1,11 +1,24 @@
-<div class="gdpr-banner__opt-out">
-    <button role="button" 
-         tabindex="0" 
+<div class="row">
+    <div class="col">
+    <a  role="button"
+         tabindex="0"
          aria-pressed="false"
-         class="gdpr-banner__button gdpr-banner__button--opt-out"
+         class="btn btn-outline-white btn-block my-3"
+	href="/cookies"
+    >
+	Learn More
+    </a>
+
+<!--
+    <button role="button"
+         tabindex="0"
+         aria-pressed="false"
+         class="btn btn-outline-white btn-block my-3"
          data-request="onDecline"
          data-request-success="document.querySelector('.gdpr-banner').remove()"
     >
         {{ 'offline.gdpr::lang.cookie_banner.decline' | trans }}
     </button>
+-->
+    </div>
 </div>

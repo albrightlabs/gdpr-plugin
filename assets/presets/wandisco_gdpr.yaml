@@ -1,0 +1,104 @@
+title: "WANdisco Cookies"
+groups:
+-   name: Analytics
+    required: 0
+    sort_order: 1
+    description: |
+        <p>We use these cookies to measure how you interact with our website.</p>
+    cookies:
+    -   name: Google Analytics
+        initial_status: 1
+        sort_order: 1
+        levels: []
+        default_level: 0
+        provider: analytics.google.com
+        description: |
+            <p>Google Analytics tracks which pages you visit.</p>
+        contact_links_dpo:
+        -   contact_link_href: https://policies.google.com/privacy?hl=en
+            contact_link_name: Privacy policy
+            detail_type: Identifier for Advertisers
+    -   name: 6Sense 
+        initial_status: 1
+        sort_order: 1
+        levels: []
+        default_level: 0
+        provider: https://6sense.co.uk/
+        description: |
+            <p>6sense tracks which pages you visit.</p>
+        contact_details_dpo: |
+        contact_links_dpo:
+        -   contact_link_href: https://6sense.co.uk/legal/
+            contact_link_name: Privacy policy
+            detail_type: Identifier for Advertisers
+
+    -   name: Facebook 
+        initial_status: 1
+        sort_order: 1
+        levels: []
+        default_level: 0
+        provider: https://facebook.com/
+        description: |
+            <p>Tracks which pages you visit.</p>
+        contact_details_dpo: |
+        contact_links_dpo:
+        -   contact_link_href: https://www.facebook.com/privacy/explanation
+            contact_link_name: Privacy policy
+            detail_type: Identifier for Advertisers
+
+    -   name: LinkedIn 
+        initial_status: 1
+        sort_order: 1
+        levels: []
+        default_level: 0
+        provider: https://linkedin.com/
+        description: |
+            <p>Tracks which pages you visit.</p>
+        contact_details_dpo: |
+        contact_links_dpo:
+        -   contact_link_href: https://www.linkedin.com/legal/privacy-policy
+            contact_link_name: Privacy policy
+            detail_type: Identifier for Advertisers
+
+    -   name: Twitter 
+        initial_status: 1
+        sort_order: 1
+        levels: []
+        default_level: 0
+        provider: https://twitter.com/
+        description: |
+            <p>Tracks which pages you visit.</p>
+        contact_details_dpo: |
+        contact_links_dpo:
+        -   contact_link_href: https://twitter.com/privacy
+            contact_link_name: Privacy policy
+            detail_type: Identifier for Advertisers
+
+    -   name: Pardot 
+        initial_status: 1
+        sort_order: 1
+        levels: []
+        default_level: 0
+        provider: https://pardot.com/
+        description: |
+            <p>Tracks which pages you visit.</p>
+        contact_details_dpo: |
+        contact_links_dpo:
+        -   contact_link_href: https://pardot.com/
+            contact_link_name: Privacy policy
+            detail_type: Identifier for Advertisers
+
+
+
+
+-   name: Required cookies
+    required: 1
+    sort_order: 2
+    description: |
+        <p>These cookies are required for the website to work.</p>
+    cookies:
+    -   name: Session cookie
+        initial_status: 1
+        sort_order: 1
+        description: |
+            <p>The session cookie is used to identify you between web requests.</p>

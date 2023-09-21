@@ -1,15 +1,4 @@
-.gdpr-banner {
-    position: fixed;
-    padding: 15px;
-    color: #fff;
-    background-color: #333;
-    bottom: 0;
-    z-index: 10000;
-    font-display: swap;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-}
+
 
 .gdpr-banner__wrapper {
     max-width: 1200px;
@@ -167,9 +156,7 @@
 }
 
 @media screen and (max-width: 560px) {
-    .gdpr-banner {
-        padding: 10px;
-    }
+   
     .gdpr-banner__dismiss {
         position: absolute;
         right: 10px;
@@ -207,9 +194,6 @@
 }
 
 @media screen and (max-width: 900px) {
-    .gdpr-banner {
-        text-align: center;
-    }
 
     .gdpr-banner__wrapper {
         display: block;

@@ -11,7 +11,7 @@ use Session;
 
 class ConsentCookie
 {
-    const SAME_SITE = 'lax';
+    const SAME_SITE = 'strict';
     const MINUTES_PER_YEAR = 24 * 60 * 365;
     const MINUTES_PER_MONTH = 24 * 60 * 30;
 
@@ -35,7 +35,7 @@ class ConsentCookie
         // will not be available everywhere until the page is reloaded again.
         Session::flash('gdpr_cookie_consent', $value);
 
-        return Cookie::make(
+        return Cookie::queue(
             'gdpr_cookie_consent',
             $value->toJson(),
             $this->expiry,          // expire
@@ -56,17 +56,6 @@ class ConsentCookie
         }
 
         return collect($value);
-    }
-
-    public function getAll()
-    {
-        $values = [];
-
-        foreach (CookieGroup::all() as $group) {
-            $values[$group->code] = $this->isAllowed($group->code);
-        }
-
-        return $values;
     }
 
     public function withExpiry($expiry)
@@ -118,33 +107,17 @@ class ConsentCookie
         return array_get($consent, $cookieCode, -1);
     }
 
-    public function hasAnyOptional()
-    {
-        $consent = $this->get();
-        $cookies = collect(CookieGroup::with('cookies')
-            ->where('required', false)
-            ->get()
-            ->flatMap(fn ($item) => $item->cookies));
-        $optional = $cookies->pluck('code');
-
-        foreach ($optional as $key) {
-            if (array_get($consent, $key, -1) >= 0) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     protected function appendRequiredCookies($userSelection)
     {
         // Wrap the collection again using the helper to extend support
         // for old Laravel 5.1 installations where the collection methods
         // behave differently (especially when using ->merge())
         $cookies = collect(CookieGroup::with('cookies')
-            ->where('required', true)
-            ->get()
-            ->flatMap(fn ($item) => $item->cookies));
+                                      ->where('required', true)
+                                      ->get()
+                                      ->flatMap(function ($item) {
+                                          return $item->cookies;
+                                      }));
 
         $required = $cookies->pluck('default_level', 'code');
 

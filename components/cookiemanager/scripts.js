@@ -1,4 +1,3 @@
-<script>
 var manager = {
     classes: {
         content: 'gdpr-cookie-manager__cookie-group--active',
@@ -77,4 +76,3 @@ var manager = {
     }
 }
 manager.init();
-</script>

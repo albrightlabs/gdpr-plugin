@@ -55,12 +55,12 @@ class ImportPresets extends Command
     protected function runImport($data): void
     {
         collect($data->get('groups'))->each(function ($entry) {
-            $group = CookieGroup::firstOrNew(['slug' => str_slug($entry['name'])]);
+            $group = new CookieGroup();
             $group->forceFill(array_except($entry, 'cookies'));
             $group->save();
 
             foreach ($entry['cookies'] as $cookieData) {
-                $cookie = Cookie::firstOrNew(['code' => str_slug($cookieData['name'])]);
+                $cookie = new Cookie();
                 $cookie->forceFill($cookieData);
                 $cookie->cookie_group_id = $group->id;
                 $cookie->save();

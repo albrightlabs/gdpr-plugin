@@ -13,10 +13,10 @@
     ],
     'cookie_banner' => [
         'description' => 'Displays a cookie banner',
-        'message' => 'We use cookies to personalize content and to analyze our traffic. Please decide if you are willing to accept cookies from our website.',
+        'message' => 'unused',
         'advanced_settings' => 'Advanced Settings',
-        'decline' => 'Decline',
-        'accept' => 'Accept',
+        'decline' => 'I do not accept',
+        'accept' => 'I ACCEPT',
         'include_css' => [
             'title' => 'Include CSS',
             'description' => 'Include default styles for this component',
@@ -37,10 +37,6 @@
             'title' => 'Page for advanced settings',
             'description' => 'Place the cookieManager component on this page',
             'empty' => 'Without advanced settings',
-        ],
-        'deferred' => [
-            'title' => 'Deferred',
-            'description' => 'The manager is only loaded if the onRenderCookieManager method is called explicitly',
         ],
     ],
     'cookie_manager' => [

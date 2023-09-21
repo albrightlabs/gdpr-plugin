@@ -1,12 +1,15 @@
-<div class="gdpr-banner__opt-in">
-    <button role="button" 
-            tabindex="0" 
-            aria-pressed="false"
-            class="gdpr-banner__button gdpr-banner__button--opt-in"
-            data-request="onAccept"
-            data-request-success="$('.gdpr-banner').remove()"
-            data-request-update="'{{ __SELF__.updatePartial }}' : '{{ __SELF__.updateSelector }}'"
-    >
-        {{ 'offline.gdpr::lang.cookie_banner.accept' | trans }}
-    </button>
+<div class="row">
+    <div class="col">
+        <button role="button"
+                tabindex="0"
+                aria-pressed="false"
+                class="btn btn-cerulean btn-block my-3"
+								id="gdprBannerOptInBtn"
+                data-request="onAccept"
+                data-request-success="$('.gdpr-banner').remove()"
+                data-request-update="'{{ __SELF__.updatePartial }}' : '{{ __SELF__.updateSelector }}'"
+        >
+            {{ 'offline.gdpr::lang.cookie_banner.accept' | trans }}
+        </button>
+    </div>
 </div>

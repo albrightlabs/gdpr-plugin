@@ -3,7 +3,6 @@
 use Cms\Classes\ComponentBase;
 use Cms\Classes\Page;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use OFFLINE\GDPR\Classes\Cookies\ConsentCookie;
 use OFFLINE\GDPR\Models\CookieGroup;
@@ -12,16 +11,10 @@ use OFFLINE\GDPR\Models\Log;
 
 class CookieBanner extends ComponentBase
 {
-    public $cookieGroups;
-
     public $hide = false;
-
     public $updatePartial = '';
-
     public $updateSelector = '';
-
     public $cookieManagerPage;
-
     /**
      * @var ConsentCookie
      */
@@ -69,7 +62,6 @@ class CookieBanner extends ComponentBase
         $this->updatePartial     = $this->property('update_partial', '');
         $this->updateSelector    = $this->property('update_selector', '#gdpr-reload');
         $this->cookieManagerPage = $this->property('cookie_manager_page');
-        $this->cookieGroups      = CookieGroup::with('cookies')->orderBy('sort_order', 'ASC')->get();
     }
 
     public function onRun()
@@ -87,38 +79,19 @@ class CookieBanner extends ComponentBase
             );
         }
 
-        if ($this->property('include_css')) {
-            $this->addCss('assets/cookieBanner/banner.css');
-        }
+//        if ($this->property('include_css')) {
+//            $this->addCss('assets/cookieBanner/banner.css');
+//        }
     }
 
     public function onAccept()
     {
-        $cookie = $this->setDefaultConsent();
-
-        $response = Response::make([]);
-
-        if ($this->updateSelector && $this->updatePartial) {
-            $content = $this->renderPartial($this->updatePartial, [
-                'cookieGroups' => $this->cookieGroups,
-                'consentCookie' => $this->consentCookie,
-            ]);
-
-            $response = Response::make([
-                $this->updateSelector => $content,
-                'content' => $content,
-                'consentCookie' => $this->consentCookie->get(),
-            ]);
-        }
-
-        return $response->withCookie($cookie);
+        $this->setDefaultConsent();
     }
 
     public function onDecline()
     {
-        $cookie = $this->consentCookie->set(false);
-
-        return Response::make(['result' => 'declined'])->withCookie($cookie);
+        $this->consentCookie->set(false);
     }
 
     public function onRefresh()
@@ -126,11 +99,6 @@ class CookieBanner extends ComponentBase
         return [
             $this->updateSelector => $this->renderPartial($this->updatePartial),
         ];
-    }
-
-    public function isAllowed($code)
-    {
-        return $this->consentCookie->isAllowed($code);
     }
 
     protected function getCookieGroups()
